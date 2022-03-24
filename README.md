@@ -1,5 +1,5 @@
 # sfmEvac
-Evacuation simulations using the Social Force Model
+Evacuation simulations using the Social Force Model, for binary mixtures of pedestrian attitudes
 ## Compile the cpp:
 g++ sfm_Evac.cpp -std=c++11 -o sfmEvac
 ## Run the simulations:
