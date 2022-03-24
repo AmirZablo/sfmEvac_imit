@@ -2,6 +2,7 @@
 Evacuation simulations using the Social Force Model, for binary mixtures of pedestrian attitudes
 ## Compile the cpp:
 g++ sfm_Evac.cpp -std=c++11 -o sfmEvac
+
 ## Run the simulations:
 ./sfmEvac params.1
 
@@ -12,6 +13,53 @@ g++ sfm_Evac.cpp -std=c++11 -o sfmEvac
 "salida.txt" contains the parameters of the simulation, the evacuation time of each pedestrian and the total evacuation time
 
 "dens_exit.txt" contains the density of pedestrians in the semicirce of radius r_dens arround the center of the exit, at each timestep 
+### Params file
+frameSaveRate -> frame saving frequency
+
+seed -> for the random generator
+
+dt -> timestep
+
+tmax -> max duration of the simulation before ending it (in simulation time)
+
+NCoop -> number of "cooperative" pedestrians
+
+NEgo -> number of "egoist" pedestrians
+
+tau_coop -> for the "cooperative" pedestrians' desire force
+
+tau_ego -> for the "egoist" pedestrians' desire force
+
+A_coop -> for the "cooperative" pedestrians' social force
+
+A_ego -> for the "egoist" pedestrians' social force
+
+B_coop -> for the "cooperative" pedestrians' social force
+
+B_ego -> for the "egoist" pedestrians' social force
+
+kappa -> friction force coefficient
+
+desiredVel_coop -> "cooperative" pedestrians' desired velocity (desire force)
+
+desiredVel_ego -> "egoist" pedestrians' desired velocity (desire force)
+
+r -> pedestrians' radius (disks)
+
+m -> pedestrians' mass
+
+L -> length of the room (square room)
+
+D -> width of the exit, located at the bottom-middle of the room
+
+phi -> half of the pedestrians' field of view
+
+cteFOV -> weight of the social force with pedestrians outside the field of view
+
+vmax -> max velocity allowed for any pedestrian
+
+r_dens -> radius of the semicircle arround the exit's center where to register the crowd density
+
 ## Make the movie frames, density frames or both:
 Inside "sim_1/frames" run "pre_movie.py", "pre_density.py" or "pre_movie+density.py"
 
