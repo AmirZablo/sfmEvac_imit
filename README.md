@@ -11,7 +11,7 @@ g++ sfm_Evac.cpp -std=c++11 -o sfmEvac
 
 "salida.txt" contains the parameters of the simulation, the evacuation time of each pedestrian and the total evacuation time
 
-"dens_exit.txt" contains the density in the semicirce of radius r_dens arround the center of the exit, at each timestep 
+"dens_exit.txt" contains the density of pedestrians in the semicirce of radius r_dens arround the center of the exit, at each timestep 
 ## Make the movie frames, density frames or both:
 Inside "sim_1/frames" run "pre_movie.py", "pre_density.py" or "pre_movie+density.py"
 
