@@ -48,7 +48,9 @@ r -> pedestrians' radius (disks)
 
 m -> pedestrians' mass
 
-L -> length of the room (square room)
+L -> length of the room
+
+H -> height of the room
 
 D -> width of the exit, located at the bottom-middle of the room
 
