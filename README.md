@@ -73,7 +73,7 @@ python3 pre_movie.py (creates a .png for each frame in the folder)
 
 python3 pre_movie.py 8 (creates a .png only for frm_000008.dat)
 
-python3 pre_movie.py 34-178 (creates a .png for each frame in the folder between frm_000034.dat and frm_000178.dat)
+python3 pre_movie.py 34 178 (creates a .png for each frame in the folder between frm_000034.dat and frm_000178.dat)
 
 #### Example of movie+density video
 ![Video of a simulation and the live density in the room](https://media.giphy.com/media/PyWTI8CgAglDImKty8/giphy.gif)
