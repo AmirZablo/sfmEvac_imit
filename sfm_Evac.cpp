@@ -46,6 +46,7 @@ float phi; //2phi is the effective angle of sight of the pedestrians
 float cteFOV; //Factor for the interaction forces when not in the FOV
 float vmax; //Maximum velocity
 float r_dens; //Density to register
+float r_imit; //Imitation radius
 string folname="";
 
 class Pedestrian;
@@ -99,6 +100,7 @@ class Pedestrian
     float new_ax;
     float prev_ay;
     float new_ay;
+    bool imit;
 
     //Pedestrian class
     Pedestrian(int name_, string att_, float x_, float y_, float vx_, float vy_, float tau_, float desiredVel_, float B_, float A_) 
@@ -121,6 +123,7 @@ class Pedestrian
         new_ay=0.0;
         xPrev=0;
         yPrev=0;
+        imit=false;
     }
 
     void update_e() //Update the direction of the pedestrian
@@ -169,10 +172,10 @@ void saveFrame(bool error) //Save the current state of the simulation
                 out.open("sim_"+folname+"/frames/frm_"+to_string((int)(iter/frameSaveRate))+".dat");
                 break;
         }
-        out<<"name x y attitude L H D r t\n";
+        out<<"name x y attitude L H D r t imitando\n";
         for(int p=0;p<peds.size();p++)
         {
-            out<<to_string(peds[p].name)+" "+to_string(peds[p].x)+" "+to_string(peds[p].y)+" "+peds[p].att+" "+to_string(L)+" "+to_string(H)+" "+to_string(D)+" "+to_string(r)+" "+to_string(t)+'\n';
+            out<<to_string(peds[p].name)+" "+to_string(peds[p].x)+" "+to_string(peds[p].y)+" "+peds[p].att+" "+to_string(L)+" "+to_string(H)+" "+to_string(D)+" "+to_string(r)+" "+to_string(t)+" "+to_string(peds[p].imit)+'\n';
         }
     }
     else
@@ -328,7 +331,10 @@ void loadParams(string ifile) //Load the parameters from the params file
             {
                 params>>r_dens;
             }
-
+            if(ident=="r_imit:")
+            {
+                params>>r_imit;
+            }
 
         }
         params.close();
@@ -398,6 +404,8 @@ int main(int argc, char *argv[]) //Main function
         salida<<"# phi: "<<phi<<"\n";
         salida<<"# cteFOV: "<<cteFOV<<"\n";
         salida<<"# vmax: "<<vmax<<"\n";
+        salida<<"# r_dens: "<<r_dens<<"\n";
+        salida<<"# r_imit: "<<r_imit<<"\n";
         salida<<"\n";
         salida<<"# Inicializando peatones...\n";
         for(int i=0; i<NEgo+NCoop; i++) //Initialize the pedestrians
@@ -412,7 +420,7 @@ int main(int argc, char *argv[]) //Main function
                 trying=false;
                 for(Pedestrian &p: peds)
                 {
-                    if((distance(x_cand,y_cand,p.x,p.y)<(4*r)) || (distance(x_cand,y_cand,-L/2,y_cand)<(3*r)) || (distance(x_cand,y_cand,L/2,y_cand)<(3*r)) || (distance(x_cand,y_cand,x_cand,H)<(3*r)) || (distance(x_cand,y_cand,x_cand,0)<(3*r)))
+                    if((distance(x_cand,y_cand,p.x,p.y)<(4*r))) //  || (distance(x_cand,y_cand,-L/2,y_cand)<(3*r)) || (distance(x_cand,y_cand,L/2,y_cand)<(3*r)) || (distance(x_cand,y_cand,x_cand,H)<(3*r)) || (distance(x_cand,y_cand,x_cand,0)<(3*r))
                     {
                         trying=true;
                         break;
@@ -487,10 +495,17 @@ int main(int argc, char *argv[]) //Main function
 
             for(int p=0;p<peds.size();p++) //Compute the total social force and friction force for each pedestrian
             {
+                int policias_vecinos=0;
+
                 for(int p2=p+1;p2<peds.size();p2++)
                 {
                     if(distance(peds[p].x,peds[p].y,peds[p2].x,peds[p2].y)<5.0)
                     {
+                        if(distance(peds[p].x,peds[p].y,peds[p2].x,peds[p2].y)<r_imit && peds[p].att=="ego" && peds[p2].att=="coop")
+                        {
+                            policias_vecinos++;
+                        }
+
                         float f12x=F_inter(peds[p].x,peds[p].y,peds[p2].x,peds[p2].y,r,r,peds[p].B,peds[p].A).x;
                         float f12y=F_inter(peds[p].x,peds[p].y,peds[p2].x,peds[p2].y,r,r,peds[p].B,peds[p].A).y;
                         
@@ -532,7 +547,25 @@ int main(int argc, char *argv[]) //Main function
                     }
                 }
 
-                //FRICTION WITH SIDE WALLS IS NOT IMPLEMENTED
+                if(peds[p].att=="ego")
+                    {
+                        if(policias_vecinos>0) //Imitación
+                        {
+                            peds[p].desiredVel=desiredVel_coop;
+                            peds[p].A=A_coop;
+                            peds[p].B=B_coop;
+                            peds[p].tau=tau_coop;
+                            peds[p].imit=true;
+                        }
+                        else
+                        {
+                            peds[p].desiredVel=desiredVel_ego;
+                            peds[p].A=A_ego;
+                            peds[p].B=B_ego;
+                            peds[p].tau=tau_ego;
+                            peds[p].imit=false;
+                        }
+                    }
 
                 peds[p].new_ax+=F_inter(peds[p].x,peds[p].y,-L/2,peds[p].y,r,0,peds[p].B,peds[p].A).x/m; //Interaction with the left wall
                 peds[p].new_ay+=F_inter(peds[p].x,peds[p].y,-L/2,peds[p].y,r,0,peds[p].B,peds[p].A).y/m;
@@ -542,6 +575,21 @@ int main(int argc, char *argv[]) //Main function
 
                 peds[p].new_ax+=F_inter(peds[p].x,peds[p].y,peds[p].x,H,r,0,peds[p].B,peds[p].A).x/m; //Interaction with the top wall
                 peds[p].new_ay+=F_inter(peds[p].x,peds[p].y,peds[p].x,H,r,0,peds[p].B,peds[p].A).y/m;
+
+                if(peds[p].x<-(L/2)+1.0*r) //Friction with left wall
+                    {
+                        Pedestrian pared(-1,"pared",-(L/2),peds[p].y,0.0,0.0,0.0,0.0,0.0,0.0);
+                        pto2D rozWall=F_roz(peds[p].x+(L/2),peds[p],pared,r,0);
+                        peds[p].new_ax+=rozWall.x/m;
+                        peds[p].new_ay+=rozWall.y/m;
+                    }
+                if(peds[p].x>(L/2)-1.0*r) //Friction with right wall
+                    {
+                        Pedestrian pared(-1,"pared",L/2,peds[p].y,0.0,0.0,0.0,0.0,0.0,0.0);
+                        pto2D rozWall=F_roz((L/2)-peds[p].x,peds[p],pared,r,0);
+                        peds[p].new_ax+=rozWall.x/m;
+                        peds[p].new_ay+=rozWall.y/m;
+                    }
 
                 if(peds[p].x<(-D/2) || peds[p].x>(D/2)) //The pedestrian's x coordinate is outside of the door
                 {
