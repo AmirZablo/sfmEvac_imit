@@ -64,16 +64,16 @@ r_dens -> radius of the semicircle arround the exit's center where to register t
 
 r_imit -> radius of the "imitation area" around cooperative pedestrians
 
-## Make the movie frames, density frames or both:
-Inside "sim_1/frames" run "pre_movie.py", "pre_density.py" or "pre_movie+density.py"
+## Make the animation's frames:
+Inside "sim_1/frames" run "pre_movie.py"
 
 To make the animation, generate the .png files and use ffmpeg
-### How to run it (pre_density and pre_movie+density works the same way)
+### How to run it
 python3 pre_movie.py (creates a .png for each frame in the folder)
 
 python3 pre_movie.py 8 (creates a .png only for frm_000008.dat)
 
 python3 pre_movie.py 34 178 (creates a .png for each frame in the folder between frm_000034.dat and frm_000178.dat)
 
-#### Example of movie+density video
+#### Example of a simulation
 ![Video of a simulation and the live density in the room](https://media.giphy.com/media/PyWTI8CgAglDImKty8/giphy.gif)
