@@ -6,7 +6,7 @@ g++ sfm_Evac.cpp -std=c++11 -o sfmEvac
 ## Run the simulations:
 ./sfmEvac params.1
 
-If you want mutiple simulations with the same parameters but different initial conditions, use "make_params.py"
+If you want to do mutiple simulations with the same parameters but different initial conditions, use "make_params.py" to generate the params file with different random seeds
 
 (A folder is created with the name "sim_1")
 
