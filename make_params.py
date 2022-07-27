@@ -1,31 +1,32 @@
 primerIndice=1
-ultimoIndice=2
+ultimoIndice=10
 indice=primerIndice # (Incrementa dentro del loop)
 
-frameSaveRate= 999999
+frameSaveRate= 100
 seed= 10
 dt= 0.001
 tmax= 500.0
-NCoop= 10
+NCoop= 0
 NEgo= 250
 tau_coop= 0.5
 tau_ego= 0.5
-A_coop= 10000.0
+A_coop= 2000.0
 A_ego= 2000.0
 B_coop= 0.08
 B_ego= 0.08
 kappa= 240000.0
-desiredVel_coop= 3.5
-desiredVel_ego= 3.5
+desiredVel_coop= 1.5
+desiredVel_ego= 3.0
 r= 0.25
 m= 70.0
 L= 30
 H= 30
-D=1.0
+D=4*r
 phi= 3.1415926
 cteFOV= 0.5
 vmax= 8.0
-r_dens=1.5*D
+r_dens=1.0*D
+r_imit=4*r
 
 while indice <= ultimoIndice:
     with open('params.'+str(indice), 'w') as f:
@@ -52,7 +53,8 @@ while indice <= ultimoIndice:
         f.write('phi: '+str(phi)+'\n')
         f.write('cteFOV: '+str(cteFOV)+'\n')
         f.write('vmax: '+str(vmax)+'\n')
-        f.write('r_dens: '+str(r_dens))
+        f.write('r_dens: '+str(r_dens)+'\n')
+        f.write('r_imit: '+str(r_imit))
 
     seed+=10
     indice+=1 
