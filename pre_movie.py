@@ -15,6 +15,7 @@ if(len(params)==1):
     D=float(datos[6][1])
     r=float(datos[7][1])
     t=float(datos[8][1])
+    imit=[int(i) for i in datos[9][1:]]
     verts=((-D/2,0),(-L/2,0),(-L/2,H),(L/2,H),(L/2,0),(D/2,0)) #(x,y)
 
     fig, ax = plt.subplots()
@@ -25,7 +26,10 @@ if(len(params)==1):
 
     for p in pos:
         if att[pos.index(p)]=='ego':
-            ax.add_artist(plt.Circle((p[0],p[1]),r,color='red'))
+            if imit[pos.index(p)]==1:
+                ax.add_artist(plt.Circle((p[0],p[1]),r,color='green'))
+            else:
+                ax.add_artist(plt.Circle((p[0],p[1]),r,color='red'))
         else:
             ax.add_artist(plt.Circle((p[0],p[1]),r,color='blue')) 
 
@@ -47,6 +51,7 @@ elif len(params)==2:
         D=float(datos[6][1])
         r=float(datos[7][1])
         t=float(datos[8][1])
+        imit=[int(i) for i in datos[9][1:]]
         verts=((-D/2,0),(-L/2,0),(-L/2,H),(L/2,H),(L/2,0),(D/2,0)) #(x,y)
 
         fig, ax = plt.subplots()
@@ -57,7 +62,10 @@ elif len(params)==2:
 
         for p in pos:
             if att[pos.index(p)]=='ego':
-                ax.add_artist(plt.Circle((p[0],p[1]),r,color='red'))
+                if imit[pos.index(p)]==1:
+                    ax.add_artist(plt.Circle((p[0],p[1]),r,color='green'))
+                else:
+                    ax.add_artist(plt.Circle((p[0],p[1]),r,color='red'))
             else:
                 ax.add_artist(plt.Circle((p[0],p[1]),r,color='blue')) 
 
@@ -79,6 +87,7 @@ else:
         D=float(datos[6][1])
         r=float(datos[7][1])
         t=float(datos[8][1])
+        imit=[int(i) for i in datos[9][1:]]
         verts=((-D/2,0),(-L/2,0),(-L/2,H),(L/2,H),(L/2,0),(D/2,0)) #(x,y)
 
         fig, ax = plt.subplots()
@@ -89,7 +98,10 @@ else:
 
         for p in pos:
             if att[pos.index(p)]=='ego':
-                ax.add_artist(plt.Circle((p[0],p[1]),r,color='red'))
+                if imit[pos.index(p)]==1:
+                    ax.add_artist(plt.Circle((p[0],p[1]),r,color='green'))
+                else:
+                    ax.add_artist(plt.Circle((p[0],p[1]),r,color='red'))
             else:
                 ax.add_artist(plt.Circle((p[0],p[1]),r,color='blue')) 
 
