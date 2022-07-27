@@ -1,5 +1,5 @@
 # sfmEvac
-Evacuation simulations using the Social Force Model, for binary mixtures of pedestrian attitudes
+Evacuation simulations using the Social Force Model, for binary mixtures of egoistic and cooperative pedestrians. Imitation of cooperative behaviour is implemented.
 ## Compile the cpp:
 g++ sfm_Evac.cpp -std=c++11 -o sfmEvac
 
@@ -61,6 +61,8 @@ cteFOV -> weight of the social force with pedestrians outside the field of view
 vmax -> max velocity allowed for any pedestrian
 
 r_dens -> radius of the semicircle arround the exit's center where to register the crowd density
+
+r_imit -> radius of the "imitation area" around cooperative pedestrians
 
 ## Make the movie frames, density frames or both:
 Inside "sim_1/frames" run "pre_movie.py", "pre_density.py" or "pre_movie+density.py"
