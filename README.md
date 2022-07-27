@@ -6,6 +6,8 @@ g++ sfm_Evac.cpp -std=c++11 -o sfmEvac
 ## Run the simulations:
 ./sfmEvac params.1
 
+If you want mutiple simulations with the same parameters but different initial conditions, use "make_params.py"
+
 (A folder is created with the name "sim_1")
 
 "frames" folder contains the .dat files with the positions of every pedestrian in the room
