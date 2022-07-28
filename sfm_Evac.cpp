@@ -128,7 +128,12 @@ class Pedestrian
 
     void update_e() //Update the direction of the pedestrian
     {
-        if(x<(-D/2 + r)) //x coordinate is to the left of the door
+        if(y>L) // if the pedestrian is far from the door (y>L), desired direction is downwards, independenly of x
+        {
+            dirx=0.0;
+            diry=-1.0;
+        }
+        else if(x<(-D/2 + r)) //x coordinate is to the left of the door
         {
             dirx=((-D/2 + r)-x)/distance(-(D/2)+r,0.0,x,y);
             diry=(-y)/distance(-(D/2)+r,0.0,x,y);
@@ -181,7 +186,7 @@ void saveFrame(bool error) //Save the current state of the simulation
     else
     {
         out.open("sim_"+to_string(seed)+"/frames/error.dat");
-        out<<"Error, pedestrian went quantum."; //Peaton atraviesa pared
+        out<<"Error, pedestrian went through wall."; //Peaton atraviesa pared
     }
     
     out.close();
