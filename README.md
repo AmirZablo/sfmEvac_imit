@@ -14,7 +14,7 @@ If you want to do mutiple simulations with the same parameters but different ini
 
 "salida.txt" contains the parameters of the simulation, the evacuation time of each pedestrian and the total evacuation time
 
-"dens_exit.txt" contains the density of pedestrians in the semicirce of radius r_dens arround the center of the exit, at each timestep 
+"dens_exit.txt" contains the density of pedestrians and their mean velocity inside the semicirce of radius r_dens arround the center of the exit, at each timestep 
 ### Params file
 frameSaveRate -> frame saving frequency
 
