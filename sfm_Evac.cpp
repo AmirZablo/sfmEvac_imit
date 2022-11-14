@@ -1,5 +1,5 @@
 //Code by Amir Nicolás Zablotsky (amirzablotsky@gmail.com)
-//Version 1, 18/2/2022
+//Last updated 11/11/2022
 //Units system: MKS
 
 #include <iostream>
@@ -16,7 +16,6 @@
 using namespace std;
 
 #define PI 3.1415926
-
 
 
 //Parameters
@@ -110,7 +109,7 @@ class Pedestrian
         x=x_;
         y=y_;
         vx=vx_;
-        vy=vy;
+        vy=vy_;
         tau=tau_;
         desiredVel=desiredVel_;
         A=A_;
@@ -128,26 +127,29 @@ class Pedestrian
 
     void update_e() //Update the direction of the pedestrian
     {
-        if(y>L) // if the pedestrian is far from the door (y>L), desired direction is downwards, independenly of x
+        if(y>L) // the pedestrian is far from the door
         {
             dirx=0.0;
             diry=-1.0;
         }
-        else if(x<(-D/2 + r)) //x coordinate is to the left of the door
+        else
         {
-            dirx=((-D/2 + r)-x)/distance(-(D/2)+r,0.0,x,y);
-            diry=(-y)/distance(-(D/2)+r,0.0,x,y);
-        }    
-        else if(x>(D/2 - r)) //x coordinate is to the right of the door
-        {
-            dirx=((D/2 - r)-x)/distance((D/2)-r,0,x,y);
-            diry=(-y)/distance((D/2)-r,0.0,x,y);
-        }   
-        else  //x coordinate is inside the door
-        {
-            dirx=0.0;
-            diry=-1.0;
-        }     
+            if(x<(-D/2 + r)) //x coordinate is to the left of the door
+            {
+                dirx=((-D/2 + r)-x)/distance(-(D/2)+r,0.0,x,y);
+                diry=(-y)/distance(-(D/2)+r,0.0,x,y);
+            }    
+            else if(x>(D/2 - r)) //x coordinate is to the right of the door
+            {
+                dirx=((D/2 - r)-x)/distance((D/2)-r,0,x,y);
+                diry=(-y)/distance((D/2)-r,0.0,x,y);
+            }   
+            else  //x coordinate is inside the door
+            {
+                dirx=0.0;
+                diry=-1.0;
+            }    
+        }  
     }
 };
 
@@ -186,7 +188,7 @@ void saveFrame(bool error) //Save the current state of the simulation
     else
     {
         out.open("sim_"+to_string(seed)+"/frames/error.dat");
-        out<<"Error, pedestrian went through wall."; //Peaton atraviesa pared
+        out<<"Error, pedestrian went quantum."; //Pedestrian went through the wall
     }
     
     out.close();
@@ -454,11 +456,13 @@ int main(int argc, char *argv[]) //Main function
         salida<<"# Comienza la simulación...\n";
         salida<<"\n";
         salida<<"# t de salida | actitud | egoistas evacuados | cooperativos evacuados | total evacuados\n";
-        dens_exit<<"# t de salida | densidad de peatones | r area\n";
+        dens_exit<<"# t de salida | densidad de peatones | r area | velocidad media\n";
 
         while(pedsLeft>0.2*(NEgo+NCoop)) //Main loop, end simulation when 80% left the room 
         {
             int p_in_r=0;
+            float v_avg=0.0;
+
             for(int p=0; p<peds.size();) //Update the position of each pedestrian
             {
                 peds[p].update_e();
@@ -493,6 +497,7 @@ int main(int argc, char *argv[]) //Main function
                     if(distance(peds[p].x,peds[p].y,0,0)<r_dens) //Check if the pedestrian is in the density registration region
                     {
                         p_in_r++;
+                        v_avg+=sqrt(peds[p].vx*peds[p].vx+peds[p].vy*peds[p].vy);
                     }
                     p++;
                 }
@@ -643,7 +648,7 @@ int main(int argc, char *argv[]) //Main function
                 peds[p].new_ay=0.0;   
             }
 
-            dens_exit<<t<<" "<<2*p_in_r/(PI*r_dens*r_dens)<<" "<<r_dens<<endl; //Save density inside the area
+            dens_exit<<t<<" "<<2*p_in_r/(PI*r_dens*r_dens)<<" "<<r_dens<<" "<<v_avg/p_in_r<<endl; //Save density inside the area
             t=roundf((t+dt) * 1000) / 1000; //Update the time
             iter+=1;
             if(iter%frameSaveRate==0) //Save frame if corresponds
