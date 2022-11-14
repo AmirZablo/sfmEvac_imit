@@ -1,4 +1,4 @@
-# sfmEvac
+# sfmEvac_imit
 Evacuation simulations using the Social Force Model, for binary mixtures of egoistic and cooperative pedestrians. Imitation of cooperative behaviour is implemented.
 ## Compile the cpp:
 g++ sfm_Evac.cpp -std=c++11 -o sfmEvac
@@ -78,4 +78,4 @@ python3 pre_movie.py 8 (creates a .png only for frm_000008.dat)
 python3 pre_movie.py 34 178 (creates a .png for each frame in the folder between frm_000034.dat and frm_000178.dat)
 
 #### Example of a simulation
-![Video of a simulation and the live density in the room](https://media.giphy.com/media/OnUHR0wlEtNLTzCCyG/giphy.gif)
+![Video of a simulation and the live density in the room](https://media.giphy.com/media/OnUHR0wlEtNLTzCCyG/giphy.gif | width=10)
