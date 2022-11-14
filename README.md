@@ -78,5 +78,5 @@ python3 pre_movie.py 8 (creates a .png only for frm_000008.dat)
 python3 pre_movie.py 34 178 (creates a .png for each frame in the folder between frm_000034.dat and frm_000178.dat)
 
 #### Example of a simulation
-<img src="https://media.giphy.com/media/OnUHR0wlEtNLTzCCyG/giphy.gif" width="250"/>
+<img src="https://media.giphy.com/media/OnUHR0wlEtNLTzCCyG/giphy.gif" width="10"/>
 ![Video of a simulation and the live density in the room](https://media.giphy.com/media/OnUHR0wlEtNLTzCCyG/giphy.gif | width=10)
