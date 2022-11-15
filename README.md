@@ -1,9 +1,9 @@
 # sfmEvac_imit
 Evacuation simulations using the Social Force Model, for binary mixtures of egoistic and cooperative pedestrians. Imitation of cooperative behaviour is implemented.
 
-#### Equations of the model
+### Social Force Model equations
 
-$\tau$
+$\Vec{F}$
 
 ## Compile the cpp:
 g++ sfm_Evac.cpp -std=c++11 -o sfmEvac
