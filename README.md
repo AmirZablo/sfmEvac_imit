@@ -3,8 +3,8 @@ Evacuation simulations using the Social Force Model, for binary mixtures of egoi
 
 ### Social Force Model equations
 
-$$\vec{F}^d=m\frac{\left(v^d\hat{e}-\vec{v}\right)}{\tau}$$
-$$\vec{F}^s_{i}=\sum_{j\neq i} A_ie^{\left[(R_i+R_j)-|| \vec{r}_i(t)-\vec{r}_j(t)||\right]/B_i}\,\hat{n}_{ij}$$
+$$\vec{F}^d_i=m_i\frac{\left(v^d_i\hat{e}_i-\vec{v}_i\right)}{\tau_i}$$
+$$\vec{F}^s_{i}=\sum_{j\neq i} A_ie^{\left((R_i+R_j)-|| \vec{r}_i(t)-\vec{r}_j(t)||\right)/B_i}\,\hat{n}_{ij}$$
 
 ## Compile the cpp:
 g++ sfm_Evac.cpp -std=c++11 -o sfmEvac
