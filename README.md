@@ -68,7 +68,7 @@ r_dens -> radius of the semicircle arround the exit's center where to register t
 r_imit -> radius of the "imitation area" around cooperative pedestrians
 
 ## Make the animation's frames:
-Inside "sim_1/frames" run "pre_movie.py"
+Inside "sim_1/frames" run "pre_movie.py" (or "pre_movie_stickmen.py", to replace the disks with stickmen)
 
 To make the animation, generate the .png files and use ffmpeg
 ### How to run it
